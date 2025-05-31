@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Ocio y Eventos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('/imagenes/opcion3.png') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      animation: fadeSlideIn 1s ease forwards;
+      position: relative;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container img {
+      width: 180px;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      color: #0D1B2A;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    p.subtitle {
+      color: #005F99;
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #007A4D;
+      outline: none;
+      box-shadow: 0 0 6px rgba(0, 122, 77, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #007A4D;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #00653E;
+      transform: scale(1.03);
+    }
+
+    .toggle-link {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #005F99;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+
+    .toggle-link:hover {
+      color: #003D66;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+        max-width: 90%;
+      }
+
+      .container img {
+        width: 140px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <img src="/imagenes/asturify2.png" alt="Logo Asturify">
+
+    <!-- LOGIN -->
+    <div id="login-form">
+      <h1>Bienvenido a Asturify</h1>
+      <p class="subtitle">Tu aplicación de ocio y eventos en Asturias</p>
+      <form th:action="@{/login}" method="post">
+  <input type="text" name="username" placeholder="Correo electrónico">
+  <input type="password" name="password" placeholder="Contraseña">
+  <button type="submit">Entrar</button>
+  <p th:if="${error}" th:text="${error}" style="color: red; margin-top: 10px;"></p>
+</form>
+	
+
+      <a class="toggle-link" onclick="toggleForms()">¿No tienes cuenta? Regístrate</a>
+    </div>
+
+    <!-- REGISTRO -->
+    <div id="register-form" class="hidden">
+      <h1>Crear una cuenta</h1>
+      <p class="subtitle">Únete a la comunidad Asturify</p>
+	      <form th:action="@{/registro}" method="post">
+	  <input type="text" name="nombre" placeholder="Nombre completo">
+	  <input type="email" name="email" placeholder="Correo electrónico">
+	  <input type="password" name="contrasena" placeholder="Contraseña">
+	  <input type="password" name="confirmarContrasena" placeholder="Confirmar contraseña">
+	  <button type="submit">Registrarse</button>
+	</form>
+      <a class="toggle-link" onclick="toggleForms()">¿Ya tienes cuenta? Inicia sesión</a>
+    </div>
+
+<p th:if="${mensaje}" th:text="${mensaje}" style="color: green;"></p>
+
+
+  </div>
+
+  <script>
+    function toggleForms() {
+      document.getElementById('login-form').classList.toggle('hidden');
+      document.getElementById('register-form').classList.toggle('hidden');
+    }
+  </script>
+
+</body>
+</html>

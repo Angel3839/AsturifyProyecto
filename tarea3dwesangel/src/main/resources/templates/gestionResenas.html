@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Gestionar Reseñas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #0D1B2A;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .reviews-section {
+      padding: 160px 20px 60px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .reviews-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .review {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .review h3 { margin: 0; color: #0D1B2A; }
+    .review p { color: #555; margin-top: 8px; }
+
+    .review button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #FF4D4D;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .review button:hover {
+      background-color: #d93c3c;
+    }
+
+    /* Modal */
+    #modalMotivo {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .modal-content select,
+    .modal-content button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .modal-content button.confirm {
+      background-color: #FF4D4D;
+      color: white;
+      border: none;
+    }
+
+    .modal-content button.cancel {
+      background-color: #ccc;
+      color: white;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; justify-content: center; }
+    }
+    
+    .main-footer {
+  background-color: #0D1B2A;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 20px;
+  min-width: 250px;
+}
+
+.footer-column h3, .footer-column h4 {
+  color: #00A676;
+  margin-bottom: 10px;
+}
+
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+    
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 9.5vh;
+    }
+
+    .btn-volver {
+      padding: 14px 35px;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #00a676, #007a4d);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 166, 118, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-volver:hover {
+      background: linear-gradient(135deg, #007a4d, #005f3c);
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 122, 77, 0.5);
+    }
+    
+    
+    #userMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0D1B2A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  #userMenu a:hover {
+    background-color: #e0f7ec;
+    color: #007A4D;
+    transform: scale(1.02);
+  }
+  
+  .alert-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInSlide 0.5s ease-in-out;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="imagenes/asturify2.png" alt="Asturify Logo" height="80">
+  <nav>
+    <a href="/inicio">Inicio</a>
+    <a href="/conocenos">Conócenos</a>
+    <a href="/eventos">Eventos</a>
+    <a href="/contacto">Contacto</a>
+  </nav>
+  
+  <div style="position: absolute; top: 85px; right: 80px;">
+  <div style="position: relative;">
+    <img src="imagenes/iconoPerfil.png" alt="Usuario" id="userIcon" style="width: 50px; height: 45px; cursor: pointer;">
+    <div id="userMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px; width: 160px;">
+      
+      <a href="/perfilUsuario">Mi Perfil</a>
+      <a href="/notificaciones">Notificaciones</a>   
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
+        <button type="submit" style="width: 100%; padding: 10px 15px; border: none; background: none; text-align: left; cursor: pointer; color: red;">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
+</header>
+
+<section class="reviews-section">
+  <div class="reviews-header">
+    <h1>Gestionar Reseñas</h1>
+    <p>Consulta y elimina comentarios inapropiados</p>
+  </div>
+  <div th:if="${mensaje}" class="alert-message" th:text="${mensaje}"></div>
+  
+
+  <div th:each="r : ${reseñas}" class="review">
+  <h3 th:text="${r.usuario.nombre}">Nombre del usuario</h3>
+
+  <p><strong>Evento:</strong> <span th:text="${r.evento.titulo}">Título del evento</span></p>
+
+  <!-- Mostrar estrellas como calificación -->
+  <div class="stars" th:utext="${'⭐'.repeat(r.calificacion)}"></div>
+
+  <p th:text="${r.comentario}">Comentario del usuario</p>
+
+  <button type="button" th:onclick="'abrirModal('+${r.id}+')'">Eliminar</button>
+</div>
+
+
+</section>
+
+<!-- Modal para eliminar reseña -->
+<div id="modalMotivo">
+  <div class="modal-content">
+    <h3>Motivo de eliminación</h3>
+    <form th:action="@{/eliminarResena}" method="post">
+      <input type="hidden" name="resenaId" id="resenaIdInput">
+      <select name="motivo" required>
+        <option value="">Selecciona un motivo</option>
+        <option value="Insultos">Insultos</option>
+        <option value="Lenguaje inapropiado">Lenguaje inapropiado</option>
+        <option value="Mala conducta">Mala conducta</option>
+        <option value="Spam">Spam</option>
+      </select>
+      <button type="submit" style="cursor: pointer;" class="confirm">Eliminar</button>
+      <button type="button" style="cursor: pointer;" class="cancel" onclick="cerrarModal()">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+<div class="center-container">
+    <button class="btn-volver" onclick="history.back()">← Volver</button>
+  </div>
+
+<script>
+  function abrirModal(resenaId) {
+    document.getElementById('resenaIdInput').value = resenaId;
+    document.getElementById('modalMotivo').style.display = 'flex';
+  }
+
+  function cerrarModal() {
+    document.getElementById('modalMotivo').style.display = 'none';
+  }
+</script>
+
+<script>
+  const userIcon = document.getElementById("userIcon");
+  const userMenu = document.getElementById("userMenu");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+      userMenu.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Asturify</h3>
+      <p>Tu plataforma de ocio en Asturias. Descubre eventos, cultura y mucho más.</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Enlaces útiles</h4>
+      <ul>
+        <li><a href="/index">Inicio</a></li>
+        <li><a href="/conocenos">Conócenos</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Contacto</h4>
+      <p>Email: info@asturify.com</p>
+      <p>Tel: +34 985 12 34 56</p>
+      <p>Asturias, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Asturify. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</html>

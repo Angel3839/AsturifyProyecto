@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+<head>
+    <title>Acceso Denegado - Asturify</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/imagenes/asturify2.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: url('/imagenes/asturias-fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+
+        .overlay {
+            background-color: rgba(0, 51, 102, 0.7);
+            padding: 80px 20px;
+            min-height: 100vh;
+        }
+
+        .logo {
+            width: 120px;
+            animation: wave 3s infinite ease-in-out;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        h1 {
+            font-size: 60px;
+            color: #FFCC00;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 22px;
+            margin-top: 20px;
+        }
+
+        a {
+            margin-top: 30px;
+            display: inline-block;
+            background-color: #FFCC00;
+            color: #003366;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ffdb4d;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <img src="/imagenes/asturify2.png" alt="Asturify" class="logo">
+        <h1>403 - Acceso Denegado</h1>
+        <p>¡Eh, paisano! Esta ruta está cerrada para ti.</p>
+        <p>No tienes permisos para acceder a esta parte del paraíso.</p>
+        <a href="javascript:history.back()">Volver</a>
+    </div>
+</body>
+</html>

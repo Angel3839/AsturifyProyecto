@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Eventos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f0f4f8;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #0D1B2A;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007A4D;
+    }
+
+    .hero {
+      background: url('imagenes/opcion3.png') no-repeat center center/cover;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 140px;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .events-section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .events-section h2 {
+      text-align: center;
+      font-size: 36px;
+      color: #0D1B2A;
+      margin-bottom: 50px;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .event-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .event-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .event-card-content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .event-card-content h3 {
+      color: #007A4D;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .event-card-content p {
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      background-color: #007A4D;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #005F99;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .hero { height: 40vh; }
+    }
+    
+    .main-footer {
+  background-color: #0D1B2A;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 20px;
+  min-width: 250px;
+}
+
+.footer-column h3, .footer-column h4 {
+  color: #00A676;
+  margin-bottom: 10px;
+}
+
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
+.center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 9.5vh;
+    }
+
+    .btn-volver {
+      padding: 14px 35px;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #00a676, #007a4d);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 166, 118, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-volver:hover {
+      background: linear-gradient(135deg, #007a4d, #005f3c);
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 122, 77, 0.5);
+    }
+    
+    
+    #userMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0D1B2A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  #userMenu a:hover {
+    background-color: #e0f7ec;
+    color: #007A4D;
+    transform: scale(1.02);
+  }
+  
+  .alert-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInSlide 0.5s ease-in-out;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInSlide 0.5s ease-in-out;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  animation: fadeInSlide 0.5s ease-in-out;
+}
+
+.hero-content {
+  padding: 30px 40px;
+  animation: fadeInUp 1s ease-out both;
+}
+
+
+.hero-content h1 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: white;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hero-content p {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+  margin: 0;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="imagenes/asturify2.png" alt="Asturify Logo" height="80">
+  <nav>
+    <a href="/inicio">Inicio</a>
+    <a href="/conocenos">Conócenos</a>
+    <a href="/eventos">Eventos</a>
+    <a href="/contacto">Contacto</a>
+  </nav>
+  
+  <div style="position: absolute; top: 85px; right: 80px;">
+  <div style="position: relative;">
+    <img src="imagenes/iconoPerfil.png" alt="Usuario" id="userIcon" style="width: 50px; height: 45px; cursor: pointer;">
+    <div id="userMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px; width: 160px;">
+      
+      <a href="/perfilUsuario">Mi Perfil</a>
+      <a href="/notificaciones">Notificaciones</a>   
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
+        <button type="submit" style="width: 100%; padding: 10px 15px; border: none; background: none; text-align: left; cursor: pointer; color: red;">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Eventos en Asturias</h1>
+    <p>Descubre, disfruta y comparte momentos únicos en tu tierra</p>
+  </div>
+</section>
+
+
+<section class="events-section">
+  <h2>Próximos Eventos</h2>
+  
+  <div style="text-align: center; margin-bottom: 30px;">
+  <a href="/crearEvento" class="btn">Crear Nuevo Evento</a>
+</div>
+  
+ <!-- Mensajes de éxito o error -->
+<div th:if="${mensaje}" class="alert-message" th:text="${mensaje}"></div>
+  <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+
+<!-- Filtro por tipo de evento -->
+<form th:action="@{/eventosFiltrar}" method="get" style="text-align: center; margin-bottom: 30px;">
+  <label for="tipo">Filtrar por tipo:</label>
+  <select name="tipo" id="tipo" style="padding: 8px; margin: 0 10px;">
+    <option value="">Todos</option>
+    <option th:each="tipo : ${T(com.Angelvf3839.tarea3dwesangel.modelo.TipoEvento).values()}"
+            th:value="${tipo}" th:text="${tipo}"
+            th:selected="${tipo} == ${tipoSeleccionado}"></option>
+  </select>
+
+  <label for="fecha">Fecha:</label>
+  <input type="date" id="fecha" name="fecha" th:value="${fechaSeleccionada}" style="padding: 8px; margin: 0 10px;"/>
+
+  <label for="precioMin">Precio mín:</label>
+  <input type="number" step="0.01" id="precioMin" name="precioMin" th:value="${precioMin}" style="padding: 8px; margin: 0 10px;"/>
+
+  <label for="precioMax">Precio máx:</label>
+  <input type="number" step="0.01" id="precioMax" name="precioMax" th:value="${precioMax}" style="padding: 8px; margin: 0 10px;"/>
+
+  <button type="submit" class="btn" >Filtrar</button>
+</form>
+
+
+
+<div class="event-grid">
+  <div class="event-card" th:each="evento : ${eventos}">
+    <div class="event-card-content">
+      <h3 th:text="${evento.titulo}">Título</h3>
+      <p th:text="${evento.descripcion}">Descripción</p>
+      <p><strong>Ubicación:</strong> <span th:text="${evento.ubicacion}">Oviedo</span></p>
+      <p><strong>Fecha:</strong> <span th:text="${evento.fecha}">2025-05-25</span></p>
+      <p><strong>Hora:</strong> <span th:text="${evento.hora}">20:00</span></p>
+      <p><strong>Precio:</strong> <span th:text="${evento.precio}">15.00</span> €</p>
+      <p><strong>Plazas disponibles:</strong> <span th:text="${evento.capacidad}">0</span></p>
+
+      <div th:if="${evento.capacidad > 0}">
+        <button type="button" class="btn" style="margin-top: 10px; cursor: pointer; display: inline-block;" 
+                th:onclick="'abrirModal(' + ${evento.id} + ')'">Reservar Evento</button>
+      </div>
+      <div th:if="${evento.capacidad == 0}">
+        <span style="color: red; font-weight: bold;">No hay plazas disponibles</span>
+      </div>
+
+      <a th:href="@{'/resenas?eventoId=' + ${evento.id}}" class="btn" 
+         style="margin-top: 10px; cursor: pointer; display: inline-block;">Añadir Reseña</a>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<div class="center-container">
+    <button class="btn-volver" onclick="history.back()">← Volver</button>
+  </div>
+
+<!-- Modal de reserva -->
+<div id="reservaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:white; padding:30px; border-radius:12px; width:300px; text-align:center;">
+    <h3>Selecciona la cantidad</h3>
+    <form id="formReserva" method="post" th:action="@{/reservar}">
+      <input type="hidden" name="eventoId" id="modalEventoId">
+      <input type="number" name="plazas" id="modalPlazas" min="1" placeholder="Cantidad de plazas" required style="margin:10px 0; width:100%; padding:10px;">
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button type="submit" style="padding:10px 20px; background-color:#007A4D; color:white; cursor: pointer; border:none; border-radius:6px;">Confirmar</button>
+        <button type="button" onclick="cerrarModal()" style="padding:10px 20px; background-color:#aaa; cursor: pointer; color:white; border:none; border-radius:6px;">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function abrirModal(eventoId) {
+    document.getElementById("modalEventoId").value = eventoId;
+    document.getElementById("reservaModal").style.display = "flex";
+  }
+
+  function cerrarModal() {
+    document.getElementById("reservaModal").style.display = "none";
+  }
+</script>
+
+<script>
+  const userIcon = document.getElementById("userIcon");
+  const userMenu = document.getElementById("userMenu");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+      userMenu.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Asturify</h3>
+      <p>Tu plataforma de ocio en Asturias. Descubre eventos, cultura y mucho más.</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Enlaces útiles</h4>
+      <ul>
+        <li><a href="/index">Inicio</a></li>
+        <li><a href="/conocenos">Conócenos</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Contacto</h4>
+      <p>Email: info@asturify.com</p>
+      <p>Tel: +34 985 12 34 56</p>
+      <p>Asturias, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Asturify. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</html>

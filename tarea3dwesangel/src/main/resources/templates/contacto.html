@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Contacto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #0D1B2A;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007A4D;
+    }
+
+    .contact-section {
+      padding: 160px 20px 60px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .contact-section h1 {
+      color: #0D1B2A;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .contact-section p {
+      color: #555;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 18px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    button {
+      background-color: #007A4D;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #005F99;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; justify-content: center; }
+    }
+    
+    .main-footer {
+  background-color: #0D1B2A;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 20px;
+  min-width: 250px;
+}
+
+.footer-column h3, .footer-column h4 {
+  color: #00A676;
+  margin-bottom: 10px;
+}
+
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+    
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 9.5vh;
+    }
+
+    .btn-volver {
+      padding: 14px 35px;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #00a676, #007a4d);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 166, 118, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-volver:hover {
+      background: linear-gradient(135deg, #007a4d, #005f3c);
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 122, 77, 0.5);
+    }
+    
+    
+    #userMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0D1B2A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  #userMenu a:hover {
+    background-color: #e0f7ec;
+    color: #007A4D;
+    transform: scale(1.02);
+  }
+  
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="imagenes/asturify2.png" alt="Asturify Logo" height="80">
+  <nav>
+    <a href="/inicio">Inicio</a>
+    <a href="/conocenos">Conócenos</a>
+    <a href="/eventos">Eventos</a>
+    <a href="/contacto">Contacto</a>
+  </nav>
+  
+  <div style="position: absolute; top: 85px; right: 80px;">
+  <div style="position: relative;">
+    <img src="imagenes/iconoPerfil.png" alt="Usuario" id="userIcon" style="width: 50px; height: 45px; cursor: pointer;">
+    <div id="userMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px; width: 160px;">
+      
+      <a href="/perfilUsuario">Mi Perfil</a>
+      <a href="/notificaciones">Notificaciones</a>   
+
+      <a href="#" onclick="document.getElementById('logoutForm').submit();" style="color: red;">Cerrar Sesión</a>
+<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
+
+    </div>
+  </div>
+</div>
+</header>
+
+<section class="contact-section">
+  <h1>Contáctanos</h1>
+  <p>¿Tienes alguna pregunta, sugerencia o propuesta de colaboración? ¡Nos encantaría saber de ti!</p>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 40px; margin-top: 40px;">
+    
+    <div style="flex: 1; min-width: 300px;">
+      <img src="imagenes/mapa.jpg" alt="Mapa de ubicación Asturify"
+           style="width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
+
+    <div style="flex: 1; min-width: 300px; font-size: 18px; line-height: 1.6;">
+  <p style="margin-bottom: 10px;"><strong>Dirección:</strong> Calle Marqués de Casa Valdés, 33202 Gijón, Asturias</p>
+  <p style="margin-bottom: 10px;"><strong>Teléfono:</strong> +34 985 12 34 56</p>
+  <p style="margin-bottom: 10px;"><strong>Email:</strong> info@asturify.com</p>
+  <p style="margin-bottom: 0;"><strong>Horario de atención:</strong> Lunes a Viernes, 9:00 - 18:00</p>
+</div>
+
+
+  </div>
+</section>
+
+<section class="contact-section" style="padding-top: 0;">
+
+  <h1>Preguntas Frecuentes (FAQ)</h1>
+  <p style="text-align: center; margin-bottom: 40px;">Encuentra respuestas rápidas a las dudas más comunes de nuestros usuarios.</p>
+
+  <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    
+    <details style="margin-bottom: 20px;">
+	  <summary style="cursor: pointer; font-weight: 600; color: #007A4D;">¿Qué tipo de eventos puedo encontrar en Asturify?</summary>
+	  <p style="margin-top: 10px; color: #555;">
+	    En Asturify reunimos una amplia variedad de eventos: conciertos, ferias, rutas gastronómicas, actividades deportivas, mercados artesanales, festividades tradicionales y mucho más. Nuestro objetivo es ofrecer un escaparate completo de lo que Asturias tiene para disfrutar.
+	  </p>
+	</details>
+
+    <details style="margin-bottom: 20px;">
+      <summary style="cursor: pointer; font-weight: 600; color: #007A4D;">¿Tiene algún coste usar Asturify?</summary>
+      <p style="margin-top: 10px; color: #555;">No, Asturify es totalmente gratuito para usuarios que deseen descubrir eventos.</p>
+    </details>
+
+    <details style="margin-bottom: 20px;">
+      <summary style="cursor: pointer; font-weight: 600; color: #007A4D;">¿Dónde opera actualmente Asturify?</summary>
+      <p style="margin-top: 10px; color: #555;">Estamos enfocados exclusivamente en Asturias. Nuestro objetivo es expandirnos gradualmente, pero por ahora nos dedicamos en cuerpo y alma a esta tierra.</p>
+    </details>
+
+    <details style="margin-bottom: 20px;">
+      <summary style="cursor: pointer; font-weight: 600; color: #007A4D;">¿Puedo colaborar con vosotros?</summary>
+      <p style="margin-top: 10px; color: #555;">¡Claro! Estamos abiertos a colaboraciones con organizadores, instituciones y marcas que compartan nuestra pasión por Asturias. Escríbenos a nuestro correo de contacto.</p>
+    </details>
+
+  </div>
+</section>
+
+
+
+<div class="center-container">
+    <button class="btn-volver" onclick="history.back()">← Volver</button>
+  </div>
+
+<script>
+  const userIcon = document.getElementById("userIcon");
+  const userMenu = document.getElementById("userMenu");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+      userMenu.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Asturify</h3>
+      <p>Tu plataforma de ocio en Asturias. Descubre eventos, cultura y mucho más.</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Enlaces útiles</h4>
+      <ul>
+        <li><a href="/index">Inicio</a></li>
+        <li><a href="/conocenos">Conócenos</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Contacto</h4>
+      <p>Email: info@asturify.com</p>
+      <p>Tel: +34 985 12 34 56</p>
+      <p>Asturias, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Asturify. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</html>

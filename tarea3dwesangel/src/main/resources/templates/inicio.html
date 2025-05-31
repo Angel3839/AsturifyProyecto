@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Ocio y Eventos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #0D1B2A;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007A4D;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('imagenes/opcion3.png') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 140px 20px 0 20px;
+    }
+
+    .hero h1 {
+      color: white;
+      font-size: 50px;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero p {
+      color: #ffffff;
+      font-size: 18px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+      background-color: #007A4D;
+      color: white;
+      padding: 14px 30px;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #005F99;
+      transform: scale(1.05);
+    }
+
+    /* Info Section */
+    .info-section {
+      padding: 80px 20px;
+      text-align: center;
+      background: #F9F9F9;
+    }
+
+    .info-section h2 {
+      color: #0D1B2A;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    .info-section p {
+      color: #555;
+      font-size: 18px;
+      max-width: 800px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 16px; }
+      nav { flex-wrap: wrap; justify-content: center; }
+    }
+    
+    .main-footer {
+  background-color: #0D1B2A;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 20px;
+  min-width: 250px;
+}
+
+.footer-column h3, .footer-column h4 {
+  color: #00A676;
+  margin-bottom: 10px;
+}
+
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
+#userMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0D1B2A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  #userMenu a:hover {
+    background-color: #e0f7ec;
+    color: #007A4D;
+    transform: scale(1.02);
+  }
+  
+  .hero {
+  background: url('imagenes/opcion3.png') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 140px 20px 0 20px;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.hero h1 {
+  font-size: 56px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  animation: fadeDown 1s ease-out;
+}
+
+.hero p {
+  font-size: 20px;
+  max-width: 700px;
+  margin-bottom: 30px;
+  animation: fadeUp 1.2s ease-out;
+}
+
+.hero .btn {
+  background-color: #00a676;
+  color: white;
+  padding: 14px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  animation: fadeUp 1.5s ease-out;
+}
+
+.hero .btn:hover {
+  background-color: #007a4d;
+  transform: scale(1.05);
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+  
+    
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="imagenes/asturify2.png" alt="Asturify Logo" height="80">
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="/conocenos">Conócenos</a>
+    <a href="/eventos">Eventos</a>
+    <a href="/contacto">Contacto</a>
+  </nav>
+  
+  <div style="position: absolute; top: 85px; right: 80px;">
+  <div style="position: relative;">
+    <img src="imagenes/iconoPerfil.png" alt="Usuario" id="userIcon" style="width: 50px; height: 45px; cursor: pointer;">
+    <div id="userMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px; width: 160px;">
+      
+      <a href="/perfilUsuario">Mi Perfil</a>
+      <a href="/notificaciones">Notificaciones</a>   
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
+        <button type="submit" style="width: 100%; padding: 10px 15px; border: none; background: none; text-align: left; cursor: pointer; color: red;">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
+  
+</header>
+
+<section class="hero">
+  <h1>¡Bienvenido a Asturify!</h1>
+  <p>Tu guía definitiva para descubrir los eventos, rincones y experiencias que hacen de Asturias un lugar único. Vive, explora y conéctate con la esencia asturiana como nunca antes.</p>
+  <a href="#eventos" class="btn">Explorar Eventos</a>
+</section>
+
+
+<p th:if="${param.error}" style="color:red;">Credenciales inválidas</p>
+<p th:if="${param.logout}" style="color:green;">Has cerrado sesión</p>
+
+
+
+<section class="info-section" id="conocenos">
+  <h2>¿Qué es Asturify?</h2>
+  <p>
+    Asturify es la plataforma líder en Asturias para descubrir los mejores planes, eventos y actividades culturales. 
+    Nuestra misión es conectar a las personas con experiencias únicas en su tierra, apoyando la cultura, el deporte y el turismo local.
+  </p>
+</section>
+
+<section class="info-section" id="eventos">
+  <h2>Próximos Eventos</h2>
+  <p>
+    Conciertos, ferias gastronómicas, rutas de senderismo y mucho más te esperan.
+    ¡Explora y encuentra tu próxima aventura en Asturias!
+  </p>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px;">
+
+  <div style="width: 300px;">
+    <img src="imagenes/gastronomia.png" alt="Ruta gastronómica" style="width: 100%; border-radius: 10px;">
+    <h3>Ruta Gastronómica</h3>
+    <p>Sabores tradicionales asturianos con fabada, cachopo y sidra en un recorrido inolvidable.</p>
+  </div>
+
+  <div style="width: 300px;">
+    <img src="imagenes/descensoSella.png" alt="Descenso del Sella" style="width: 100%; border-radius: 10px;">
+    <h3>Descenso del Sella</h3>
+    <p>Vive una aventura remando por uno de los ríos más emblemáticos del norte de España.</p>
+  </div>
+
+  <div style="width: 300px;">
+    <img src="imagenes/parapenteGijon.png" alt="Parapente en Asturias" style="width: 100%; border-radius: 10px;">
+    <h3>Parapente sobre la costa</h3>
+    <p>Vistas aéreas impresionantes del litoral asturiano para los más aventureros.</p>
+  </div>
+
+  <div style="width: 300px;">
+    <img src="imagenes/fiestaDePrao.png" alt="Fiesta de prao" style="width: 100%; border-radius: 10px;">
+    <h3>Fiesta de Prao</h3>
+    <p>Una noche mágica de música, baile y tradición bajo las estrellas asturianas.</p>
+  </div>
+
+  <div style="width: 300px;">
+    <img src="imagenes/motosAgua.png" alt="Motos de agua" style="width: 100%; border-radius: 10px;">
+    <h3>Rutas en Motos de Agua</h3>
+    <p>Disfruta la adrenalina del Cantábrico en una experiencia náutica inolvidable.</p>
+  </div>
+
+</div>
+
+
+<section class="info-section" id="contacto">
+  <h2>Contáctanos</h2>
+  <p>
+    ¿Tienes preguntas? ¡Estamos aquí para ayudarte! Escríbenos para obtener más información sobre nuestros servicios o colaboraciones.
+  </p>
+</section>
+
+<script>
+  const userIcon = document.getElementById("userIcon");
+  const userMenu = document.getElementById("userMenu");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+      userMenu.style.display = "none";
+    }
+  });
+</script>
+
+
+</body>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Asturify</h3>
+      <p>Tu plataforma de ocio en Asturias. Descubre eventos, cultura y mucho más.</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Enlaces útiles</h4>
+      <ul>
+        <li><a href="/index">Inicio</a></li>
+        <li><a href="/conocenos">Conócenos</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Contacto</h4>
+      <p>Email: info@asturify.com</p>
+      <p>Tel: +34 985 12 34 56</p>
+      <p>Asturias, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Asturify. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="icon" href="/imagenes/favicon.ico" type="image/x-icon">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asturify - Conócenos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #0D1B2A;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #007A4D;
+    }
+
+    .hero {
+      background: url('imagenes/opcion3.png') no-repeat center center/cover;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 140px;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .section {
+      padding: 80px 20px;
+      background: #F9F9F9;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 32px;
+      color: #0D1B2A;
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #555;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .team-member {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      width: 260px;
+      text-align: center;
+    }
+
+    .team-member img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .team-member h3 {
+      font-size: 20px;
+      color: #007A4D;
+      margin-bottom: 5px;
+    }
+
+    .team-member p {
+      font-size: 16px;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; justify-content: center; }
+      .hero { height: 50vh; }
+    }
+    
+    .main-footer {
+  background-color: #0D1B2A;
+  color: #f1f1f1;
+  padding: 40px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 20px;
+  min-width: 250px;
+}
+
+.footer-column h3, .footer-column h4 {
+  color: #00A676;
+  margin-bottom: 10px;
+}
+
+.footer-column p, .footer-column a {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  color: #aaa;
+  border-top: 1px solid #333;
+  padding-top: 15px;
+}
+
+.center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 9.5vh;
+    }
+
+    .btn-volver {
+      padding: 14px 35px;
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #00a676, #007a4d);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0, 166, 118, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-volver:hover {
+      background: linear-gradient(135deg, #007a4d, #005f3c);
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 122, 77, 0.5);
+    }
+    
+    #userMenu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0D1B2A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+  }
+
+  #userMenu a:hover {
+    background-color: #e0f7ec;
+    color: #007A4D;
+    transform: scale(1.02);
+  }
+  
+  .hero {
+  background: url('imagenes/opcion3.png') no-repeat center center/cover;
+  height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 140px;
+  position: relative;
+  color: #fff;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.35); /* oscurece sutilmente */
+  z-index: 0;
+}
+
+.hero-content {
+  z-index: 1;
+  max-width: 800px;
+  animation: fadeSlide 1.2s ease-out both;
+}
+
+.hero-title {
+  font-size: 48px;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
+.hero-title span {
+  color: #00ffb2;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  line-height: 1.6;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="imagenes/asturify2.png" alt="Asturify Logo" height="80">
+  <nav>
+    <a href="/inicio">Inicio</a>
+    <a href="#mision">Nuestra Misión</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#historia">Historia</a>
+  </nav>
+  
+  <div style="position: absolute; top: 85px; right: 80px;">
+  <div style="position: relative;">
+    <img src="imagenes/iconoPerfil.png" alt="Usuario" id="userIcon" style="width: 50px; height: 45px; cursor: pointer;">
+    <div id="userMenu" style="display: none; position: absolute; right: 0; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-top: 10px; width: 160px;">
+      
+      <a href="/perfilUsuario">Mi Perfil</a>
+      <a href="/notificaciones">Notificaciones</a>   
+
+      <form th:action="@{/logout}" method="post" style="margin: 0;">
+        <button type="submit" style="width: 100%; padding: 10px 15px; border: none; background: none; text-align: left; cursor: pointer; color: red;">Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Descubre el alma de <span>Asturias</span></h1>
+    <p class="hero-subtitle">Más que eventos, compartimos cultura, naturaleza y emoción.</p>
+    <p class="hero-subtitle">Descubre nuestra historia.</p>
+  </div>
+</section>
+
+
+<section class="section" id="mision">
+  <h2>Nuestra Misión</h2>
+  <p>
+    En Asturify, creemos en el poder de las experiencias locales. Queremos que cada persona descubra la magia que Asturias ofrece,
+    desde sus montañas y playas hasta sus vibrantes eventos culturales.
+  </p>
+</section>
+
+<section class="section" id="equipo">
+  <h2>Conoce a nuestro equipo</h2>
+  <div class="team">
+    <div class="team-member">
+      <img src="/imagenes/persona1.png" alt="Nombre del miembro">
+      <h3>Ángel Villabrille</h3>
+      <p>Fundador y CEO</p>
+    </div>
+    <div class="team-member">
+      <img src="/imagenes/persona2.png" alt="Nombre del miembro">
+      <h3>Alejandro Miranda</h3>
+      <p>Director de Eventos</p>
+    </div>
+    <div class="team-member">
+      <img src="/imagenes/persona3.png" alt="Nombre del miembro">
+      <h3>Cristina Mellado</h3>
+      <p>Marketing y Redes Sociales</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="historia">
+  <h2>Nuestra Historia</h2>
+  <p>
+    Asturify nació en 2024 como un proyecto personal con una idea sencilla: crear un espacio donde reunir y compartir lo mejor de nuestra tierra, Asturias. 
+	Este proyecto comenzó desde casa, movido por el amor a nuestra cultura y la necesidad de conectar a las personas con los eventos que hacen vibrar nuestros pueblos y ciudades.
+  </p>
+  <p>
+    Empezamos poco a poco, difundiendo actividades locales, ferias tradicionales y conciertos modestos. Cada paso ha sido un reto, pero también una motivación. 
+    Con mucho esfuerzo, hemos creado esta plataforma que crece día a día, gracias a la confianza de quienes creen en nosotros.
+  </p>
+  <p>
+    Asturify es todavía joven, pero tenemos claro hacia dónde vamos: queremos seguir dando visibilidad a todo lo que hace única a Asturias. 
+    Y aunque somos pequeños, soñamos en grande: que cada rincón del Principado tenga su lugar aquí, y que cada usuario sienta que forma parte de algo especial.
+  </p>
+  <img src="/imagenes/firma.png" alt="Firma Asturify" style="display: block; margin: 40px auto; max-width: 250px;">
+</section>
+
+
+
+<div class="center-container">
+    <button class="btn-volver" onclick="history.back()">← Volver</button>
+  </div>
+
+<script>
+  const userIcon = document.getElementById("userIcon");
+  const userMenu = document.getElementById("userMenu");
+
+  userIcon.addEventListener("click", () => {
+    userMenu.style.display = userMenu.style.display === "block" ? "none" : "block";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+      userMenu.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-column">
+      <h3>Asturify</h3>
+      <p>Tu plataforma de ocio en Asturias. Descubre eventos, cultura y mucho más.</p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Enlaces útiles</h4>
+      <ul>
+        <li><a href="/index">Inicio</a></li>
+        <li><a href="/conocenos">Conócenos</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Contacto</h4>
+      <p>Email: info@asturify.com</p>
+      <p>Tel: +34 985 12 34 56</p>
+      <p>Asturias, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Asturify. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</html>
