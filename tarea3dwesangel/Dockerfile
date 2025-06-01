@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . /app
 
-RUN ./mvnw clean package -DskipTests
+RUN chmod +x ./mvnw && ./mvnw clean package -DskipTests
 
 CMD ["java", "-jar", "target/tarea3dwesangel-0.0.1-SNAPSHOT.jar"]
