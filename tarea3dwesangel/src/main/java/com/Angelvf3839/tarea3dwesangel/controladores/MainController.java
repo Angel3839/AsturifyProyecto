@@ -105,7 +105,6 @@ public class MainController {
             return "redirect:/index";
         }
 
-        // Guardamos los datos en sesión
         Sesion sesion = new Sesion(usuario.getId(), usuario.getNombre(), usuario.getTipoUsuario());
         session.setAttribute("usuario", sesion);
         session.setAttribute("tiempoInicio", System.currentTimeMillis());
@@ -117,7 +116,7 @@ public class MainController {
 
     @GetMapping("/inicio")
     public String mostrarInicio() {
-        return "inicio";  // nombre del archivo HTML: inicio.html
+        return "inicio";
     }
     
     @GetMapping("/contacto")
@@ -144,10 +143,9 @@ public class MainController {
     public String mostrarEventos(Model model) {
         List<Evento> todosLosEventos = eventoRepository.findAll();
 
-        // Filtrar eventos cuya fecha aún no ha pasado
         LocalDate hoy = LocalDate.now();
         List<Evento> eventosFuturos = todosLosEventos.stream()
-            .filter(e -> !e.getFecha().isBefore(hoy)) // incluir hoy o fechas futuras
+            .filter(e -> !e.getFecha().isBefore(hoy))
             .collect(Collectors.toList());
 
         model.addAttribute("eventos", eventosFuturos);
@@ -247,7 +245,6 @@ public class MainController {
 
             System.out.println("Evento guardado correctamente en la base de datos.");
 
-            // Añadir notificación a todos los usuarios
             List<Usuario> usuarios = usuarioRepository.findAll();
             for (Usuario usuario : usuarios) {
                 Notificacion notificacion = new Notificacion();
@@ -318,19 +315,16 @@ public class MainController {
         eventoRepository.save(evento);
         reservaRepository.save(reserva);
 
-        // ✅ Formatear fecha y hora del evento
         DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
 
         String fechaFormateada = evento.getFecha().format(formatterFecha);
         String horaFormateada = evento.getHora().format(formatterHora);
 
-        // ✅ Obtener y formatear fecha y hora actual (momento de la reserva)
         LocalDateTime ahora = LocalDateTime.now();
         String fechaActual = ahora.format(formatterFecha);
         String horaActual = ahora.format(formatterHora);
 
-        // Crear notificación
         Notificacion notificacion = new Notificacion();
         notificacion.setUsuario(usuario);
         notificacion.setFechaEnvio(ahora);
@@ -387,13 +381,13 @@ public class MainController {
     public String mostrarResenas(@RequestParam("eventoId") Long eventoId, Model model) {
         Optional<Evento> eventoOpt = eventoRepository.findById(eventoId);
         if (eventoOpt.isEmpty()) {
-            return "redirect:/eventos"; // o mostrar un error
+            return "redirect:/eventos";
         }
 
         Evento evento = eventoOpt.get();
         List<Reseña> resenas = resenaRepository.findByEventoId(eventoId);
 
-        model.addAttribute("evento", evento); // esto es necesario para el formulario
+        model.addAttribute("evento", evento);
         model.addAttribute("resenas", resenas);
         return "resenas";
     }
@@ -410,12 +404,11 @@ public class MainController {
         List<Evento> eventosDisponibles = eventoRepository.findAll();
         List<Reserva> reservasUsuario = reservaRepository.findByUsuarioId(sesion.getIdUsuario());
 
-        // NUEVO: Obtener notificaciones del usuario
         List<Notificacion> notificaciones = notificacionRepository.findByUsuarioId(sesion.getIdUsuario());
 
         model.addAttribute("eventosNotificaciones", eventosDisponibles);
         model.addAttribute("reservasNotificaciones", reservasUsuario);
-        model.addAttribute("notificaciones", notificaciones); // añadir al modelo
+        model.addAttribute("notificaciones", notificaciones);
 
         return "notificaciones";
     }
@@ -444,27 +437,6 @@ public class MainController {
 
         return "editarUsuario";
     }
-
-//    @GetMapping("/reservas")
-//    public String mostrarReservas(HttpSession session, Model model) {
-//        Sesion sesion = (Sesion) session.getAttribute("usuario");
-//        if (sesion == null) {
-//            return "redirect:/index";
-//        }
-//
-//        Optional<Usuario> usuarioOpt = usuarioRepository.findById(sesion.getIdUsuario());
-//        if (usuarioOpt.isEmpty()) {
-//            return "redirect:/index";
-//        }
-//
-//        Usuario usuario = usuarioOpt.get();
-//
-//        List<Reserva> reservas = reservaRepository.findByUsuario(usuario);
-//        model.addAttribute("reservas", reservas);
-//
-//        return "reservas";
-//    }
-
 
     @GetMapping("/reservas")
     public String verReservas(HttpSession session, Model model) {
@@ -548,7 +520,6 @@ public class MainController {
                                    @RequestParam("confirmarContrasena") String confirmarContrasena,
                                    RedirectAttributes redirectAttributes) {
 
-        // Validaciones de campos vacíos
         if (nombre == null || nombre.trim().isEmpty() ||
             email == null || email.trim().isEmpty() ||
             contrasena == null || contrasena.trim().isEmpty() ||
@@ -558,33 +529,28 @@ public class MainController {
             return "redirect:/index";
         }
 
-        // Validación de formato de email
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
             redirectAttributes.addFlashAttribute("error", "El formato del correo electrónico no es válido.");
             return "redirect:/index";
         }
 
 
-        // Validación de contraseña segura
         if (contrasena.length() < 6 || !contrasena.matches(".*[A-Z].*") || !contrasena.matches(".*\\d.*")) {
             redirectAttributes.addFlashAttribute("error", "La contraseña debe tener al menos 6 caracteres, una mayúscula y un número.");
             return "redirect:/index";
         }
 
-        // Validación de coincidencia de contraseñas
         if (!contrasena.equals(confirmarContrasena)) {
             redirectAttributes.addFlashAttribute("error", "Las contraseñas no coinciden.");
             return "redirect:/index";
         }
 
-        // Validación de existencia de email
         Optional<Usuario> existente = usuarioRepository.findByEmail(email);
         if (existente.isPresent()) {
             redirectAttributes.addFlashAttribute("error", "El correo electrónico ya está registrado.");
             return "redirect:/index";
         }
 
-        // Registro de usuario
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(nombre);
         nuevoUsuario.setEmail(email);
@@ -658,11 +624,9 @@ public class MainController {
         Reserva reserva = reservaOpt.get();
         Evento evento = reserva.getEvento();
 
-        // Devolver plazas al evento
         evento.setCapacidad(evento.getCapacidad() + reserva.getCantidadPlazas());
         eventoRepository.save(evento);
 
-        // Eliminar la reserva
         reservaRepository.deleteById(reservaId);
 
         redirectAttributes.addFlashAttribute("mensaje", "Reserva cancelada correctamente.");
@@ -671,7 +635,7 @@ public class MainController {
 
     @PostMapping("/eliminarNotificacion")
     public String eliminarNotificacion(@RequestParam("notificacionId") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
-        // Verificamos el usuario en sesión
+        
         Sesion sesion = (Sesion) session.getAttribute("usuario");
         if (sesion == null) {
             redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión.");
@@ -683,7 +647,6 @@ public class MainController {
         if (notificacionOpt.isPresent()) {
             Notificacion notificacion = notificacionOpt.get();
 
-            // Validamos que la notificación pertenezca al usuario
             if (notificacion.getUsuario().getId().equals(sesion.getIdUsuario())) {
                 notificacionRepository.deleteById(id);
                 redirectAttributes.addFlashAttribute("mensaje", "Notificación eliminada correctamente.");

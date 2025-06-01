@@ -27,26 +27,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Recursos públicos
+                
                 .requestMatchers("/imagenes/**", "/css/**", "/js/**", "/webjars/**").permitAll()
                 .requestMatchers("/", "/index", "/registro").permitAll()
 
-                // Accesible por todos los roles
                 .requestMatchers("/inicio").hasAnyRole("ADMINISTRADOR", "REGISTRADO", "INVITADO")
 
-                // Solo ADMINISTRADOR
                 .requestMatchers("/eventos/crear", "/crearEvento", "/gestionReseñas").hasRole("ADMINISTRADOR")
 
-                // Solo REGISTRADO
                 .requestMatchers("/menuUsuario/**").hasRole("REGISTRADO")
 
-                // Compartido entre ADMINISTRADOR y REGISTRADO
                 .requestMatchers("/notificaciones", "/notificaciones/**", "/reservas", "/reservas/**", "/editarUsuario").hasAnyRole("ADMINISTRADOR", "REGISTRADO")
 
-                // Solo INVITADO
                 .requestMatchers("/invitado/**").hasRole("INVITADO")
 
-                // Cualquier otra petición
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
@@ -76,7 +70,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance(); // Usa BCrypt en producción
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

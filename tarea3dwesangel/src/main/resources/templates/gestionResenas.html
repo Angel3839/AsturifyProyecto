@@ -278,7 +278,7 @@
 
   <p><strong>Evento:</strong> <span th:text="${r.evento.titulo}">Título del evento</span></p>
 
-  <!-- Mostrar estrellas como calificación -->
+  
   <div class="stars" th:utext="${'⭐'.repeat(r.calificacion)}"></div>
 
   <p th:text="${r.comentario}">Comentario del usuario</p>
@@ -289,7 +289,7 @@
 
 </section>
 
-<!-- Modal para eliminar reseña -->
+
 <div id="modalMotivo">
   <div class="modal-content">
     <h3>Motivo de eliminación</h3>

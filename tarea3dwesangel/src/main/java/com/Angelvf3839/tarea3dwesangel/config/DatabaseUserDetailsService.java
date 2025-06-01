@@ -29,7 +29,6 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
 
-        // Guardar información en sesión HTTP
         HttpSession session = request.getSession();
         session.setAttribute("usuario", new Sesion(usuario.getId(), usuario.getNombre(), usuario.getTipoUsuario()));
         session.setAttribute("tiempoInicio", System.currentTimeMillis());

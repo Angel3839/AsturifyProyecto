@@ -29,7 +29,6 @@ public class Reseña {
     @JoinColumn(name = "evento_id", nullable = false)
     private Evento evento;
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }

@@ -358,11 +358,9 @@
   <a href="/crearEvento" class="btn">Crear Nuevo Evento</a>
 </div>
   
- <!-- Mensajes de éxito o error -->
 <div th:if="${mensaje}" class="alert-message" th:text="${mensaje}"></div>
   <div th:if="${error}" class="alert-error" th:text="${error}"></div>
 
-<!-- Filtro por tipo de evento -->
 <form th:action="@{/eventosFiltrar}" method="get" style="text-align: center; margin-bottom: 30px;">
   <label for="tipo">Filtrar por tipo:</label>
   <select name="tipo" id="tipo" style="padding: 8px; margin: 0 10px;">
@@ -417,7 +415,6 @@
     <button class="btn-volver" onclick="history.back()">← Volver</button>
   </div>
 
-<!-- Modal de reserva -->
 <div id="reservaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
   <div style="background:white; padding:30px; border-radius:12px; width:300px; text-align:center;">
     <h3>Selecciona la cantidad</h3>

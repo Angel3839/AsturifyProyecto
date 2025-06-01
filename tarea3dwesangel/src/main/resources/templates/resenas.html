@@ -279,7 +279,7 @@
 
   <div class="review-form">
   <form th:action="@{/resenas}" method="post">
-    <input type="hidden" name="eventoId" th:value="${evento.id}"> <!-- IMPORTANTE: necesitas pasar el ID del evento -->
+    <input type="hidden" name="eventoId" th:value="${evento.id}">
 
     <textarea name="comentario" placeholder="Cuéntanos tu experiencia..." rows="4" required></textarea>
     

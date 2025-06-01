@@ -258,8 +258,7 @@
 
   <div class="notifications-list">
 
-  <!-- Notificaciones de nuevos eventos -->
-<!-- SOLO PARA NOTIFICACIONES DE EVENTOS, que sí existen en la base de datos -->
+
 <div class="notification-item" th:each="notificacion : ${notificaciones}">
   <h3>🔔 <span th:text="${notificacion.mensaje}">Mensaje</span></h3>
   <p th:text="${notificacion.mensaje}">Contenido del mensaje</p>
